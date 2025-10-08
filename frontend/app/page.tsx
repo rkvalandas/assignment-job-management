@@ -50,7 +50,7 @@ export default function Home() {
       params.append("maxSalary", salaryRange[1].toString());
 
       const response = await fetch(
-        process.env.NEXT_PUBLIC_API_URL + "/api/jobs?" + params.toString()
+        process.env.NEXT_PUBLIC_BACKEND_URL + "/api/jobs?" + params.toString()
       );
       const data = await response.json();
       setJobs(data);
