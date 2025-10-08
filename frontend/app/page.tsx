@@ -49,7 +49,9 @@ export default function Home() {
       params.append("minSalary", salaryRange[0].toString());
       params.append("maxSalary", salaryRange[1].toString());
 
-      const response = await fetch(process.env.NEXT_PUBLIC_API_URL + "/api/jobs?" + params.toString());
+      const response = await fetch(
+        process.env.NEXT_PUBLIC_API_URL + "/api/jobs?" + params.toString()
+      );
       const data = await response.json();
       setJobs(data);
     } catch (error) {
@@ -61,28 +63,43 @@ export default function Home() {
 
   useEffect(() => {
     fetchJobs();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [searchQuery, locationFilter, jobTypeFilter, salaryRange]);
 
-  const handleCreateJob = async (values: any) => {
+  const handleCreateJob = async (values: {
+    jobTitle: string;
+    companyName: string;
+    location: string;
+    jobType: string;
+    salaryMin: string;
+    salaryMax: string;
+    jobDescription: string;
+    requirements: string;
+    responsibilities: string;
+    applicationDeadline: string;
+  }) => {
     try {
-      const response = await fetch(process.env.NEXT_PUBLIC_BACKEND_URL + "/api/jobs", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          jobTitle: values.jobTitle,
-          companyName: values.companyName,
-          location: values.location,
-          jobType: values.jobType,
-          salaryMin: values.salaryMin ? parseInt(values.salaryMin) : null,
-          salaryMax: values.salaryMax ? parseInt(values.salaryMax) : null,
-          jobDescription: values.jobDescription,
-          requirements: values.requirements,
-          responsibilities: values.responsibilities,
-          applicationDeadline: values.applicationDeadline,
-        }),
-      });
+      const response = await fetch(
+        process.env.NEXT_PUBLIC_BACKEND_URL + "/api/jobs",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            jobTitle: values.jobTitle,
+            companyName: values.companyName,
+            location: values.location,
+            jobType: values.jobType,
+            salaryMin: values.salaryMin ? parseInt(values.salaryMin) : null,
+            salaryMax: values.salaryMax ? parseInt(values.salaryMax) : null,
+            jobDescription: values.jobDescription,
+            requirements: values.requirements,
+            responsibilities: values.responsibilities,
+            applicationDeadline: values.applicationDeadline,
+          }),
+        }
+      );
 
       if (response.ok) {
         setCreateModalOpened(false);

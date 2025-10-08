@@ -1,12 +1,24 @@
 "use client";
 
 import { useState } from "react";
-import { IconCalendar, IconChevronDown } from "@tabler/icons-react";
+
+interface JobFormData {
+  jobTitle: string;
+  companyName: string;
+  location: string;
+  jobType: string;
+  salaryMin: string;
+  salaryMax: string;
+  jobDescription: string;
+  requirements: string;
+  responsibilities: string;
+  applicationDeadline: string;
+}
 
 interface CreateJobModalProps {
   opened: boolean;
   onClose: () => void;
-  onSubmit: (values: any) => void;
+  onSubmit: (values: JobFormData) => void;
 }
 
 export default function CreateJobModal({
