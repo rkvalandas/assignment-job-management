@@ -1,211 +1,191 @@
-# Job Management Admin Interface
+# Job Management Application
 
-A full-stack job management application with an admin interface for creating and managing job postings.
+A full-stack job posting and management platform built with modern web technologies. This application allows users to browse job listings, apply advanced filters, and create new job postings.
 
-## Features
+## 🚀 Project Overview
 
-- **Job Listing Page** with filtering by:
+This is a comprehensive job management system featuring a clean, modern UI with real-time job search and filtering capabilities. The application is designed with a focus on user experience, performance, and scalability.
 
-  - Job Title (search)
-  - Location
-  - Job Type (Full-time, Part-time, Contract, Internship)
-  - Salary Range (slider)
+### Key Features
 
-- **Job Creation Modal** with form validation for:
-  - Job Title
-  - Company Name
-  - Location
-  - Job Type
-  - Salary Range
-  - Job Description
-  - Requirements
-  - Responsibilities
-  - Application Deadline
+- **Job Listings**: Browse all available job postings in a responsive grid layout
+- **Advanced Filtering**:
+  - Search by job title or role
+  - Filter by location (multiple cities + remote)
+  - Filter by job type (Full-time, Part-time, Contract, Internship)
+  - Interactive salary range slider (₹0.5L - ₹80L per month)
+- **Job Creation**: Create new job postings with detailed information
+- **Responsive Design**: Fully responsive UI that works on all devices
+- **Modern UI/UX**: Clean interface with Tailwind CSS styling
+- **Real-time Updates**: Jobs update automatically when filters change
 
-## Tech Stack
+## 🛠️ Tech Stack
 
 ### Frontend
 
-- **Next.js 15** - React framework
-- **Mantine UI** - Component library
-- **TypeScript** - Type safety
-- **Tabler Icons** - Icon library
+- **Framework**: Next.js 15.5.4 (React 19.1.0)
+- **Language**: TypeScript
+- **Styling**: Tailwind CSS 4
+- **Icons**: Tabler Icons React
+- **Deployment**: Vercel
 
 ### Backend
 
-- **Node.js** - Runtime environment
-- **Express.js** - Web framework
-- **PostgreSQL** - Database
-- **CORS** - Cross-origin resource sharing
+- **Runtime**: Node.js
+- **Framework**: Express.js 5.1.0
+- **Database**: PostgreSQL (Supabase)
+- **Deployment**: Vercel Serverless Functions
 
-## Prerequisites
+## 📦 Project Structure
 
-- Node.js (v18 or higher)
-- PostgreSQL (v14 or higher)
-- npm or yarn
+```
+frontend/
+├── app/
+│   ├── components/
+│   │   ├── Header.tsx          # Navigation header with floating design
+│   │   ├── JobCard.tsx         # Job listing card component
+│   │   └── CreateJobModal.tsx  # Job creation form modal
+│   ├── page.tsx                # Main page with filters and job grid
+│   ├── layout.tsx              # Root layout
+│   └── globals.css             # Global styles
+├── public/                     # Static assets
+└── .env.local                  # Environment variables
 
-## Setup Instructions
-
-### 1. Database Setup
-
-First, install PostgreSQL if you haven't already:
-
-- **macOS**: `brew install postgresql@14`
-- **Ubuntu**: `sudo apt-get install postgresql`
-- **Windows**: Download from [postgresql.org](https://www.postgresql.org/download/)
-
-Start PostgreSQL service:
-
-```bash
-# macOS
-brew services start postgresql@14
-
-# Ubuntu
-sudo service postgresql start
-
-# Windows - PostgreSQL should start automatically
+backend/
+├── index.js                    # Express server with API routes
+├── db.js                       # PostgreSQL connection config
+├── seed.js                     # Database seeding script
+└── vercel.json                 # Vercel deployment config
 ```
 
-Create the database:
+## 🚀 Getting Started
+
+### Prerequisites
+
+- Node.js 18+ installed
+- PostgreSQL database (Supabase recommended)
+
+### Installation
+
+1. **Clone the repository**
 
 ```bash
-# Access PostgreSQL
-psql postgres
-
-# Inside psql, run:
-CREATE DATABASE job_management;
-\q
+git clone https://github.com/rkvalandas/assignment-job-management.git
+cd assignment-job-management
 ```
 
-### 2. Backend Setup
+2. **Setup Backend**
 
 ```bash
-# Navigate to backend directory
 cd backend
-
-# Install dependencies
 npm install
-
-# Update .env file with your PostgreSQL credentials
-# Edit the file and set your password:
-# DB_PASSWORD=your_postgres_password
-
-# Start the server (this will auto-create tables)
-npm run dev
 ```
 
-The backend will run on `http://localhost:5000`
+Create `.env` file in backend directory:
 
-### 3. Seed Sample Data (Optional)
-
-To add sample job postings:
-
-```bash
-cd backend
-node seed.js
+```env
+DB_USER=your_db_user
+DB_HOST=your_db_host
+DB_NAME=your_db_name
+DB_PASSWORD=your_db_password
+DB_PORT=6543
+PORT=8000
+CLIENT_URL=http://localhost:3000
 ```
 
-### 4. Frontend Setup
+3. **Setup Frontend**
 
 ```bash
-# Navigate to frontend directory
 cd frontend
-
-# Install dependencies
 npm install
+```
 
-# Start the development server
+Create `.env.local` file in frontend directory:
+
+```env
+NEXT_PUBLIC_BACKEND_URL=http://localhost:8000
+```
+
+4. **Initialize Database**
+
+```bash
+cd backend
+npm run seed
+```
+
+5. **Run Development Servers**
+
+Backend:
+
+```bash
+cd backend
+npm start
+```
+
+Frontend (in a new terminal):
+
+```bash
+cd frontend
 npm run dev
 ```
 
-The frontend will run on `http://localhost:3000`
+Open [http://localhost:3000](http://localhost:3000) to view the application.
 
-## Usage
+## 🌐 Deployment
 
-1. Open your browser and navigate to `http://localhost:3000`
-2. Use the filters to search for jobs:
-   - Search by job title or role
-   - Select preferred location
-   - Filter by job type
-   - Adjust salary range using the slider
-3. Click "Create Jobs" button to open the job creation modal
-4. Fill in the form and click "Publish" to create a new job posting
+### Frontend (Vercel)
 
-## API Endpoints
+The frontend is deployed on Vercel at: `https://assignment-job-management.vercel.app`
 
-### GET /api/jobs
+### Backend (Vercel Serverless)
 
-Get all jobs with optional filters
+The backend API is deployed at: `https://assignment-job-management-backend.vercel.app`
 
-- Query params: `jobTitle`, `location`, `jobType`, `minSalary`, `maxSalary`
+### Environment Variables (Production)
 
-### GET /api/jobs/:id
+Set these in your Vercel dashboard:
 
-Get a specific job by ID
+**Frontend:**
 
-### POST /api/jobs
+- `NEXT_PUBLIC_BACKEND_URL`: Your backend API URL
 
-Create a new job posting
+**Backend:**
 
-- Body: Job details (title, company, location, type, salary, description, etc.)
+- `DB_USER`: PostgreSQL username
+- `DB_HOST`: Database host
+- `DB_NAME`: Database name
+- `DB_PASSWORD`: Database password
+- `DB_PORT`: Database port (usually 6543 for Supabase)
+- `CLIENT_URL`: Your frontend URL
+- `NODE_ENV`: production
 
-### PUT /api/jobs/:id
+## 📡 API Endpoints
 
-Update an existing job
+- `GET /api/jobs` - Fetch all jobs with optional filters
+  - Query params: `jobTitle`, `location`, `jobType`, `minSalary`, `maxSalary`
+- `GET /api/jobs/:id` - Fetch single job by ID
+- `POST /api/jobs` - Create new job posting
+- `PUT /api/jobs/:id` - Update existing job
+- `DELETE /api/jobs/:id` - Delete job posting
+- `GET /api/health` - Health check endpoint
 
-### DELETE /api/jobs/:id
+## 🎨 Design Features
 
-Delete a job posting
+- **Floating Header**: Centered navigation with gradient button
+- **Generalized Company Logos**: Color-coded gradient avatars for companies
+- **Interactive Filters**: 12-column grid layout with search, location, job type, and salary range
+- **Custom Slider**: Styled range input with dynamic background gradient
+- **Responsive Cards**: Job cards with company info, salary, location, and apply button
 
-## Project Structure
+## 🔒 Security Features
 
-```
-assignment/
-├── backend/
-│   ├── db.js              # Database connection and schema
-│   ├── server.js          # Express server and API routes
-│   ├── seed.js            # Sample data seeding script
-│   ├── .env               # Environment variables
-│   └── package.json
-│
-└── frontend/
-    ├── app/
-    │   ├── components/
-    │   │   ├── Header.tsx         # Navigation header
-    │   │   ├── JobCard.tsx        # Job listing card
-    │   │   └── CreateJobModal.tsx # Job creation form
-    │   ├── page.tsx               # Main page with filters
-    │   ├── layout.tsx             # Root layout with Mantine
-    │   └── globals.css            # Global styles
-    └── package.json
-```
+- CORS configuration for allowed origins
+- Environment variable protection
+- SQL injection prevention with parameterized queries
+- Input validation on both frontend and backend
 
-## Design Features
+## 👤 Author
 
-- Clean, modern UI matching the provided design mockups
-- Responsive layout for desktop and mobile
-- Smooth animations and transitions
-- Color-coded company logos
-- Time-based job posting badges
-- Gradient buttons and hover effects
+**rk Valandasu**
 
-## Troubleshooting
-
-### Database Connection Issues
-
-- Ensure PostgreSQL is running: `brew services list` (macOS)
-- Check your credentials in `.env` file
-- Verify database exists: `psql -l`
-
-### Port Already in Use
-
-- Backend (5000): Change `PORT` in `backend/.env`
-- Frontend (3000): Run `npm run dev -- -p 3001`
-
-### Module Not Found Errors
-
-- Delete `node_modules` and reinstall: `rm -rf node_modules && npm install`
-
-## License
-
-MIT
+- GitHub: [@rkvalandas](https://github.com/rkvalandas)
