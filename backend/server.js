@@ -6,18 +6,31 @@ const pool = require("./db");
 const app = express();
 const PORT = process.env.PORT || 5000;
 
-
 // Middleware - Configure CORS for Vercel deployment
+const allowedOrigins = [
+  process.env.CLIENT_URL,
+  "https://assignment-job-management.vercel.app",
+  "http://localhost:3000",
+].filter(Boolean);
+
 const corsConfig = {
-  origin: process.env.CLIENT_URL,
-  methods: ["GET", "POST", "PUT", "DELETE"],
+  origin: function (origin, callback) {
+    // Allow requests with no origin (like mobile apps or curl requests)
+    if (!origin) return callback(null, true);
+
+    if (allowedOrigins.indexOf(origin) !== -1) {
+      callback(null, true);
+    } else {
+      callback(new Error("Not allowed by CORS"));
+    }
+  },
+  methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
   allowedHeaders: ["Content-Type", "Authorization"],
-  credentials: true, // Allow cookies to be sent with requests
+  credentials: true,
 };
 
-app.options("", cors(corsConfig));
 app.use(cors(corsConfig));
-
+app.options("*", cors(corsConfig));
 app.use(express.json());
 
 // GET all jobs with filters
@@ -210,6 +223,12 @@ app.get("/api/health", (req, res) => {
   res.json({ status: "OK", message: "Server is running" });
 });
 
-app.listen(PORT, () => {
-  console.log(`Server is running on port ${PORT}`);
-});
+// For local development
+if (process.env.NODE_ENV !== "production") {
+  app.listen(PORT, () => {
+    console.log(`Server is running on port ${PORT}`);
+  });
+}
+
+// Export for Vercel serverless
+module.exports = app;
