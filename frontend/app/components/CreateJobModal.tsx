@@ -63,6 +63,8 @@ export default function CreateJobModal({
     if (!formData.jobType) newErrors.jobType = "Job type is required";
     if (!formData.jobDescription)
       newErrors.jobDescription = "Job description is required";
+    if (!formData.applicationDeadline)
+      newErrors.applicationDeadline = "Application deadline is required";
     return newErrors;
   };
 
@@ -226,15 +228,25 @@ export default function CreateJobModal({
             </div>
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-1">
-                Application Deadline
+                Application Deadline <span className="text-red-500">*</span>
               </label>
               <input
                 type="date"
                 name="applicationDeadline"
                 value={formData.applicationDeadline}
                 onChange={handleChange}
-                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                required
+                className={`w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 ${
+                  errors.applicationDeadline
+                    ? "border-red-500"
+                    : "border-gray-300"
+                }`}
               />
+              {errors.applicationDeadline && (
+                <p className="text-red-500 text-sm mt-1">
+                  {errors.applicationDeadline}
+                </p>
+              )}
             </div>
           </div>
 
