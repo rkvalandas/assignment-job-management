@@ -191,8 +191,8 @@ export default function Home() {
                   Salary Per Month
                 </span>
                 <span className="text-[15px] font-semibold text-gray-900">
-                  ₹{(salaryRange[0] / 100000).toFixed(0)}k - ₹
-                  {(salaryRange[1] / 100000).toFixed(0)}k
+                  ₹{(salaryRange[0] / 100000).toFixed(1)}L - ₹
+                  {(salaryRange[1] / 100000).toFixed(1)}L
                 </span>
               </div>
               <div className="relative">
